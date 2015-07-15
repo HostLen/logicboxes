@@ -1,3 +1,5 @@
+require 'json'
+require 'logicboxes'
 module Logicboxes
   class Customers
     def self.generate_token(username, password, ip)
@@ -6,7 +8,8 @@ module Logicboxes
     end
 
     def self.authenticate_token(token)
-      return token
+      a = Logicboxes::LogicboxesConnector.send('/api/customers/authenticate-token.json', {token: token}, :get)
+      return JSON.parse(a)
     end
   end
 end
